@@ -6,6 +6,7 @@ import Home from './core/Home'
 import PrivateRoute from './user/PrivateRoute'
 import UserDashBoard from './user/Dashboard'
 import AdminDashBoard from './admin/AdminDashBoard'
+import AdminRoute from './admin/AdminRoute'
 
 const Routes = () => {
     return (
@@ -16,7 +17,7 @@ const Routes = () => {
                 
                 <Route path='/' exact component={Home} />
                 <PrivateRoute path='/user/dashboard' exact component={UserDashBoard} />
-                <PrivateRoute path='/admin/dashboard' exact component={AdminDashBoard} />
+                <AdminRoute path='/admin/dashboard' exact component={AdminDashBoard} />
 
             </Switch>
         </BrowserRouter>
