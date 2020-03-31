@@ -43,3 +43,21 @@ exports.authenticate = (data, next) => {
         next()
     }
 }
+
+exports.signout = (next) => {
+    // to remove user information from localstorage
+    if(typeof window !== 'undefined') {
+        localStorage.removeItem('jwt')
+        next()
+    }
+    // api call
+    return fetch(`${API}/signout`, {
+        method: "GET",
+    })
+    .then(res => {
+        console.log('signout', res)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
