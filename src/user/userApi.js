@@ -61,3 +61,16 @@ exports.signout = (next) => {
         console.log(err)
     })
 }
+
+exports.isAuthenticated = () => {
+    if(typeof window === 'undefined') {
+       return false
+    }
+
+    if(localStorage.getItem('jwt')) {
+        // to parse user data to JSON and return it
+        return JSON.parse(localStorage.getItem('jwt'))
+    } else {
+        return false
+    }
+}
