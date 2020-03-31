@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Redirect} from 'react-router-dom'
 import Layout from '../core/Layout'
-import {signin, authenticate} from './userApi'
+import {signin, authenticate, isAuthenticated} from './userApi'
 
 const Signin = () => {
     //writing state with multiple properties using useState()
@@ -16,6 +16,7 @@ const Signin = () => {
 
     //destructuring properties from state
     const {email, password, error, loading, redirectToReferrer} = values
+    const {user} = isAuthenticated()
 
     // Higher Order Function(HOF), is a functiton returning another function
     const handleChange = name => event => {
@@ -82,7 +83,11 @@ const Signin = () => {
 
     const redirectUser = () => {
         if(redirectToReferrer) {
-            return <Redirect to='/' />
+            if(user && user.role === 1) {
+                return <Redirect to='/admin/dashboard' />
+            } else {
+                return <Redirect to='/user/dashboard' />
+            }
         }
     }
     

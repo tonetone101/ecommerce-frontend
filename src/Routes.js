@@ -4,7 +4,8 @@ import Signup from './user/Signup'
 import Signin from './user/Signin'
 import Home from './core/Home'
 import PrivateRoute from './user/PrivateRoute'
-import DashBoard from './user/Dashboard'
+import UserDashBoard from './user/Dashboard'
+import AdminDashBoard from './admin/AdminDashBoard'
 
 const Routes = () => {
     return (
@@ -14,7 +15,8 @@ const Routes = () => {
                 <Route path='/signin' exact component={Signin} />
                 
                 <Route path='/' exact component={Home} />
-                <PrivateRoute path='/dashboard' exact component={DashBoard} />
+                <PrivateRoute path='/user/dashboard' exact component={UserDashBoard} />
+                <PrivateRoute path='/admin/dashboard' exact component={AdminDashBoard} />
 
             </Switch>
         </BrowserRouter>
