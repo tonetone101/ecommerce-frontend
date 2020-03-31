@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Redirect} from 'react-router-dom'
 import Layout from '../core/Layout'
-import {signin} from './userApi'
+import {signin, authenticate} from './userApi'
 
 const Signin = () => {
     //writing state with multiple properties using useState()
@@ -33,10 +33,13 @@ const Signin = () => {
                 // then updating them 
                 setValues({...values, error: data.error, loading: false})
             } else {
-                setValues({
-                    ...values,
-                    redirectToReferrer: true
-                })
+                // authenticate accepts the user data and a callback function as an arguement
+               authenticate(data, () => {
+                    setValues({
+                        ...values,
+                        redirectToReferrer: true
+                    })
+               })
             }
         })
 

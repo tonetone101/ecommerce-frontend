@@ -35,3 +35,11 @@ exports.signin = (user) => {
         console.log(error)
     })
 }
+
+// to save user information to localstorage
+exports.authenticate = (data, next) => {
+    if(typeof window !== 'undefined') {
+        localStorage.setItem('jwt', JSON.stringify(data))
+        next()
+    }
+}
