@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import Layout from '../core/Layout'
 import {isAuthenticated} from '../user/userApi'
 import {createCategory} from './adminApi'
+import { Link } from 'react-router-dom'
 
 const AddCategory = () => {
     const [name, setName] = useState('')
@@ -24,9 +25,17 @@ const AddCategory = () => {
 
     const showError = () => {
         if (error) {
-            return <h3 className='text-danger'>{name} should be unique</h3>
+            return <h3 className='text-danger'>Category should be unique</h3>
         }
     }
+
+    const goBack = () => (
+        <div className='mt-5'>
+            <Link to='/admin/dashboard' className='text-warning'>
+                Back to Dashboard
+            </Link>
+        </div>
+    )
 
     const clickSubmit = (event) => {
         event.preventDefault()
@@ -37,7 +46,7 @@ const AddCategory = () => {
         createCategory(user._id, token, {name})
         .then(data => {
             if (data.error) {
-                setError(data.error)
+                setError(true)
             } else {
                 setError('')
                 setSuccess(true)
@@ -52,7 +61,7 @@ const AddCategory = () => {
                 <label className='text-muted'>
                     Name
                 </label>
-                <input type='text' value={name} className='form-control' onChange={handleChange} autoFocus />
+                <input type='text' value={name} className='form-control' onChange={handleChange} autoFocus required />
                 
             </div>
             <button className='btn btn-outline-primary'> 
@@ -66,7 +75,10 @@ const AddCategory = () => {
         <Layout title='Add a new Category' description={`G'day ${user.name}, ready to add a new category?`} >
            <div className='row'>
                <div className='col-md-8 offset-md-2'>
+                    {showSuccess()}
+                    {showError()}
                     {newCategoryForm()}
+                    {goBack()}
                </div>
            </div>
 
