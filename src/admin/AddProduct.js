@@ -54,7 +54,7 @@ const AddProduct = () => {
                 <label>
                     Name
                 </label>
-                <input type='text' className='form-control' />
+                <input type='text' className='' />
             </div>
         </form>
     )
