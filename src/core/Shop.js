@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Layout from './Layout'
 import Card from './Card'
-import {getCategories} from './apiCore'
+import {getCategories, getFilteredProducts} from './apiCore'
 import CheckBox from './CheckBox'
 import RadioBox from './RadioBox'
 import {prices} from './FixedPrices'
@@ -15,6 +15,9 @@ const Shop = () => {
     })
     const [categories, setCategories] = useState([])
     const [error, setError] = useState(false)
+    const [limit, setLimit] = useState(6)
+    const [skip, setSkip] = useState(0)
+    const [filteredResults, setFilteredResults] = useState([])
 
     
     //load categories and set form data
@@ -30,9 +33,22 @@ const Shop = () => {
         })
     }
 
+    const loadFilterResults = (newFilters) => {
+        // console.log(newFilters)
+        getFilteredProducts(skip, limit, newFilters)
+        .then(data => {
+            if (data.error) {
+                setError(data.error)
+            } else {
+                setFilteredResults(data.data)
+            }
+        })
+    }
+
     //lifecycle method
     useEffect(() => {
         init()
+        loadFilterResults(skip, limit, myFilters.filters)
     }, [])
 
     const handleFilters = (filters, filterBy) => {
@@ -46,6 +62,7 @@ const Shop = () => {
 
         }
 
+        loadFilterResults(myFilters.filters)
         setMyFilters(newFilters)
     }
 
@@ -78,7 +95,18 @@ const Shop = () => {
             </div>
 
             <div className='col-8'>
-                {JSON.stringify(myFilters)}
+                <h2 className='mb-4'>
+                    Products
+                </h2>
+                <div className='row'>
+                    {filteredResults.map((product, i) => {
+                        return (
+                            <div key={i} className='col-6 mb-3'>
+                                <Card product={product} />
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
           </div>
         </Layout>
