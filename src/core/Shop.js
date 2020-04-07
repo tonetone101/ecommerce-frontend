@@ -17,6 +17,7 @@ const Shop = () => {
     const [error, setError] = useState(false)
     const [limit, setLimit] = useState(6)
     const [skip, setSkip] = useState(0)
+    const [size, setSize] = useState(0)
     const [filteredResults, setFilteredResults] = useState([])
 
     
@@ -41,8 +42,33 @@ const Shop = () => {
                 setError(data.error)
             } else {
                 setFilteredResults(data.data)
+                setSize(data.size)
+                setSkip(0)
             }
         })
+    }
+
+    const loadMore = () => {
+        let toSkip = skip + limit
+        // console.log(newFilters)
+        getFilteredProducts(toSkip, limit, myFilters.filters)
+        .then(data => {
+            if (data.error) {
+                setError(data.error)
+            } else {
+                setFilteredResults([...filteredResults, ...data.data])
+                setSize(data.size)
+                setSkip(toSkip)
+            }
+        })
+    }
+
+    const loadMoreButton = () => {
+        return (
+            size > 0 && size >=limit && (
+                <button onClick={loadMore} className='btn btn-warning mb-5'>Load More</button>
+            )
+        )
     }
 
     //lifecycle method
@@ -101,12 +127,14 @@ const Shop = () => {
                 <div className='row'>
                     {filteredResults.map((product, i) => {
                         return (
-                            <div key={i} className='col-6 mb-3'>
-                                <Card product={product} />
-                            </div>
+                            
+                                <Card key={i}  product={product} />
+                            
                         )
                     })}
                 </div>
+                <hr/>
+                {loadMoreButton()}
             </div>
           </div>
         </Layout>
