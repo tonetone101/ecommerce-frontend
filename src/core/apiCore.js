@@ -46,7 +46,7 @@ exports.getFilteredProducts = (skip, limit, filters = {}) => {
 
 exports.list = params => {
   const query = queryString.stringify(params);
-  return fetch(`${API}/products?${query}`, {
+  return fetch(`${API}/products/search?${query}`, {
     method: "GET"
   })
     .then(response => {
