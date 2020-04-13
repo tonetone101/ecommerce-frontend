@@ -54,3 +54,23 @@ exports.list = params => {
     })
     .catch(error => console.log(error));
 };
+
+exports.read = productId => {
+  return fetch(`${API}/product/${productId}`, {
+    method: "GET"
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(error => console.log(error));
+};
+
+exports.listRelated = productId => {
+  return fetch(`${API}/products/related/${productId}`, {
+    method: "GET"
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(error => console.log(error));
+};
