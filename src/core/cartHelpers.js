@@ -1,3 +1,4 @@
+// update quanty of items to localstorage
 export const addItem = (item = [], count = 0, next = f => f) => {
   let cart = [];
   if (typeof window !== "undefined") {
@@ -18,7 +19,10 @@ export const addItem = (item = [], count = 0, next = f => f) => {
     // ...with the array of ids we got on when first map() was used
     // run map() on it again and return the actual product from the cart
 
+    // new Set removes the duplicates by mapping thru items
+    // then we map again thru the new set of items
     cart = Array.from(new Set(cart.map(p => p._id))).map(id => {
+      // compares Id of items from new array
       return cart.find(p => p._id === id);
     });
 
