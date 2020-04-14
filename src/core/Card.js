@@ -5,6 +5,7 @@ import moment from "moment";
 import { addItem, updateItem, removeItem } from "./cartHelpers";
 
 const Card = ({
+  // props
   product,
   showViewProductButton = true,
   showAddToCartButton = true,
@@ -30,7 +31,7 @@ const Card = ({
   };
 
   const addToCart = () => {
-    // console.log('added');
+    console.log("added");
     addItem(product, setRedirect(true));
   };
 
@@ -88,6 +89,7 @@ const Card = ({
       )
     );
   };
+
   const showRemoveButton = showRemoveProductButton => {
     return (
       showRemoveProductButton && (
@@ -105,7 +107,7 @@ const Card = ({
   };
   return (
     <div className="card ">
-      <div className="card-header card-header-1 ">{product.name}</div>
+      <div className="card-header card-header-1 lead">{product.name}</div>
       <div className="card-body">
         {shouldRedirect(redirect)}
         <ShowImage item={product} url="product" />

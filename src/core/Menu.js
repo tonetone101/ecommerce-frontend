@@ -1,84 +1,119 @@
-import React from 'react'
-import {Link, withRouter} from 'react-router-dom'
-import {signout, isAuthenticated} from '../user/userApi'
+import React from "react";
+import { Link, withRouter } from "react-router-dom";
+import { signout, isAuthenticated } from "../auth/index";
+import { itemTotal } from "./cartHelpers";
 
 const isActive = (history, path) => {
-    if (history.location.pathname === path) {
-        return {
-            color: '#ff9900'
-        }
-    } else {
-        return {
-            color: '#ffffff'
-        }
-    }
-}
+  if (history.location.pathname === path) {
+    return {
+      color: "#ff9900"
+    };
+  } else {
+    return {
+      color: "#ffffff"
+    };
+  }
+};
 
-const Menu = ({history}) => {
-   return ( 
-        <div>
-            <ul className="nav nav-tabs bg-primary">
-                <li className='nav-item'>
-                    <Link style={isActive(history, '/')} className='nav-link' to='/'>
-                        Home page
-                    </Link>
-                </li>
+const Menu = ({ history }) => {
+  return (
+    <div>
+      <ul className="nav nav-tabs bg-primary">
+        <li className="nav-item">
+          <Link style={isActive(history, "/")} className="nav-link" to="/">
+            Home page
+          </Link>
+        </li>
 
-                <li className='nav-item'>
-                    <Link style={isActive(history, '/shop')} className='nav-link' to='/shop'>
-                        Shop
-                    </Link>
-                </li>
+        <li className="nav-item">
+          <Link
+            style={isActive(history, "/shop")}
+            className="nav-link"
+            to="/shop"
+          >
+            Shop
+          </Link>
+        </li>
 
-                { isAuthenticated() && isAuthenticated().user.role === 0 && (
-                   
-                        <li className='nav-item'>
-                            <Link style={isActive(history, '/user/dashboard')} className='nav-link' to='/user/dashboard'>
-                                Dashboard
-                            </Link>
-                        </li>
-                  
-                )}
+        <li className="nav-item">
+          <Link
+            style={isActive(history, "/cart")}
+            className="nav-link"
+            to="/cart"
+          >
+            Cart {/* to show total number of items in cart */}
+            <sup>
+              <small className="cart-badge">{itemTotal()}</small>
+            </sup>
+          </Link>
+        </li>
 
-                { isAuthenticated() && isAuthenticated().user.role === 1 && (
-                    
-                        <li className='nav-item'>
-                            <Link style={isActive(history, '/admin/dashboard')} className='nav-link' to='/admin/dashboard'>
-                                Admin
-                            </Link>
-                        </li>
-                   
-                )}      
+        {isAuthenticated() && isAuthenticated().user.role === 0 && (
+          <li className="nav-item">
+            <Link
+              style={isActive(history, "/user/dashboard")}
+              className="nav-link"
+              to="/user/dashboard"
+            >
+              Dashboard
+            </Link>
+          </li>
+        )}
 
-               {!isAuthenticated() && (
-                   <React.Fragment>
-                        <li className='nav-item'>
-                            <Link style={isActive(history, '/signin')} className='nav-link' to='/signin'>
-                                Sign In
-                            </Link>
-                        </li>
+        {isAuthenticated() && isAuthenticated().user.role === 1 && (
+          <li className="nav-item">
+            <Link
+              style={isActive(history, "/admin/dashboard")}
+              className="nav-link"
+              to="/admin/dashboard"
+            >
+              Admin
+            </Link>
+          </li>
+        )}
 
-                        <li className='nav-item'>
-                            <Link style={isActive(history, '/signup')} className='nav-link' to='/signup'>
-                                Sign Up
-                            </Link>
-                        </li>
-                   </React.Fragment>
-               )}
+        {!isAuthenticated() && (
+          <React.Fragment>
+            <li className="nav-item">
+              <Link
+                style={isActive(history, "/signin")}
+                className="nav-link"
+                to="/signin"
+              >
+                Sign In
+              </Link>
+            </li>
 
-                {isAuthenticated() && (
-                    <li className='nav-item'>
-                        <span style={{cursor: 'pointer', color: '#ffffff'}} className='nav-link' onClick={() => signout(() => {
-                            history.push('/')
-                        })}>
-                            Sign out
-                        </span>
-                    </li>
-                )}
-                
-            </ul>
-        </div>
-   )
-}
+            <li className="nav-item">
+              <Link
+                style={isActive(history, "/signup")}
+                className="nav-link"
+                to="/signup"
+              >
+                Sign Up
+              </Link>
+            </li>
+          </React.Fragment>
+        )}
 
-export default withRouter(Menu)
+        {isAuthenticated() && (
+          <li className="nav-item">
+            <span
+              style={{ cursor: "pointer", color: "#ffffff" }}
+              className="nav-link"
+              onClick={() =>
+                signout(() => {
+                  history.push("/");
+                })
+              }
+            >
+              Sign out
+            </span>
+          </li>
+        )}
+      </ul>
+    </div>
+  );
+};
+
+export default withRouter(Menu);

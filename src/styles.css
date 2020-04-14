@@ -115,3 +115,10 @@
     background-position: 0% 50%;
   }
 }
+
+/* card */
+.card-header {
+  background-color: indigo;
+  color: white;
+  font-weight: bold;
+}
