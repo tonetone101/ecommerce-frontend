@@ -126,6 +126,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
   };
 
   const showDropIn = () => (
+    // onBlur is for whenever you click anywhere on the page itll empty the error message
     <div onBlur={() => setData({ ...data, error: "" })}>
       {data.clientToken !== null && products.length > 0 ? (
         <div>
