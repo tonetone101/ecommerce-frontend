@@ -1,35 +1,35 @@
 import { API } from "../config";
 
-export const signup = user => {
+export const signup = (user) => {
   return fetch(`${API}/signup`, {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(user)
+    body: JSON.stringify(user),
   })
-    .then(response => {
+    .then((response) => {
       return response.json();
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 };
 
-export const signin = user => {
+export const signin = (user) => {
   return fetch(`${API}/signin`, {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(user)
+    body: JSON.stringify(user),
   })
-    .then(response => {
+    .then((response) => {
       return response.json();
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 };
@@ -41,17 +41,18 @@ export const authenticate = (data, next) => {
   }
 };
 
-export const signout = next => {
+export const signout = (next) => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("jwt");
+    localStorage.removeItem("cart");
     next();
     return fetch(`${API}/signout`, {
-      method: "GET"
+      method: "GET",
     })
-      .then(response => {
+      .then((response) => {
         console.log("signout", response);
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 };
 

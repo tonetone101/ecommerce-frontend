@@ -15,7 +15,7 @@ const Cart = () => {
     setItems(getCart());
   }, [run]);
 
-  const showItems = items => {
+  const showItems = (items) => {
     return (
       <div>
         <h2>Your cart has {`${items.length}`} items</h2>
@@ -56,7 +56,7 @@ const Cart = () => {
         <div className="col-6">
           <h2 className="mb-4">Your Cart Summary</h2>
           <hr />
-          {/*<Checkout products={items} />*/}
+          <Checkout products={items} />
         </div>
       </div>
     </Layout>

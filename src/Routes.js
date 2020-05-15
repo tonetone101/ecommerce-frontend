@@ -26,10 +26,10 @@ const Routes = () => {
         <Route path="/shop" exact component={Shop} />
         <Route path="/signin" exact component={Signin} />
         <Route path="/signup" exact component={Signup} />
-        <PrivateRoute path="/user/dashboard" exact component={Dashboard} />
-        <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
-        <AdminRoute path="/create/category" exact component={AddCategory} />
-        <AdminRoute path="/create/product" exact component={AddProduct} />
+        <Route path="/user/dashboard" exact component={Dashboard} />
+        <Route path="/admin/dashboard" exact component={AdminDashboard} />
+        <Route path="/create/category" exact component={AddCategory} />
+        <Route path="/create/product" exact component={AddProduct} />
         <Route path="/product/:productId" exact component={Product} />
         <Route path="/cart" exact component={Cart} />
         {/*<AdminRoute path="/admin/orders" exact component={Orders} />*/}

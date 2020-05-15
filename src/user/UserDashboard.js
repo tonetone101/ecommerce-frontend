@@ -9,12 +9,12 @@ const Dashboard = () => {
   const [history, setHistory] = useState([]);
 
   const {
-    user: { _id, name, email, role }
+    user: { _id, name, email, role },
   } = isAuthenticated();
   const token = isAuthenticated().token;
 
-  const init = (userId, token) => {
-    getPurchaseHistory(userId, token).then(data => {
+  const init = (_id, token) => {
+    return getPurchaseHistory(_id, token).then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
@@ -62,7 +62,7 @@ const Dashboard = () => {
     );
   };
 
-  const purchaseHistory = history => {
+  const purchaseHistory = (history) => {
     return (
       <div className="card mb-5">
         <h3 className="card-header">Purchase history</h3>
