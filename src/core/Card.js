@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import ShowImage from "./ShowImage";
 import moment from "moment";
@@ -11,14 +11,14 @@ const Card = ({
   showAddToCartButton = true,
   cartUpdate = false,
   showRemoveProductButton = false,
-  setRun = f => f,
-  run = undefined
+  setRun = (f) => f,
+  run = undefined,
   // changeCartSize
 }) => {
   const [redirect, setRedirect] = useState(false);
   const [count, setCount] = useState(product.count);
 
-  const showViewButton = showViewProductButton => {
+  const showViewButton = (showViewProductButton) => {
     return (
       showViewProductButton && (
         <Link to={`/product/${product._id}`} className="mr-2">
@@ -31,21 +31,22 @@ const Card = ({
   };
 
   const addToCart = () => {
-    console.log("added");
-    addItem(product, setRedirect(true));
+    addItem(product);
   };
 
-  const shouldRedirect = redirect => {
+  const shouldRedirect = (redirect) => {
     if (redirect) {
       return <Redirect to="/cart" />;
     }
   };
 
-  const showAddToCartBtn = showAddToCartButton => {
+  const showAddToCartBtn = (showAddToCartButton) => {
     return (
       showAddToCartButton && (
         <button
-          onClick={addToCart}
+          onClick={() => {
+            addToCart(product);
+          }}
           className="btn btn-outline-warning mt-2 mb-2 card-btn-1  "
         >
           Add to cart
@@ -54,7 +55,7 @@ const Card = ({
     );
   };
 
-  const showStock = quantity => {
+  const showStock = (quantity) => {
     return quantity > 0 ? (
       <span className="badge badge-primary badge-pill">In Stock </span>
     ) : (
@@ -62,7 +63,7 @@ const Card = ({
     );
   };
 
-  const handleChange = productId => event => {
+  const handleChange = (productId) => (event) => {
     setRun(!run); // run useEffect in parent Cart
     setCount(event.target.value < 1 ? 1 : event.target.value);
     if (event.target.value >= 1) {
@@ -70,7 +71,7 @@ const Card = ({
     }
   };
 
-  const showCartUpdateOptions = cartUpdate => {
+  const showCartUpdateOptions = (cartUpdate) => {
     return (
       cartUpdate && (
         <div>
@@ -90,7 +91,7 @@ const Card = ({
     );
   };
 
-  const showRemoveButton = showRemoveProductButton => {
+  const showRemoveButton = (showRemoveProductButton) => {
     return (
       showRemoveProductButton && (
         <button

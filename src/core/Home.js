@@ -8,10 +8,11 @@ const Home = () => {
   const [productsBySell, setProductsBySell] = useState([]);
   const [productsByArrival, setProductsByArrival] = useState([]);
   const [error, setError] = useState(false);
+  const [items, setItems] = useState([]);
 
   // show products that have been sold
   const loadProductsBySell = () => {
-    getProducts("sold").then(data => {
+    getProducts("sold").then((data) => {
       if (data.error) {
         setError(data.error);
       } else {
@@ -22,7 +23,7 @@ const Home = () => {
 
   // show products that are newly created
   const loadProductsByArrival = () => {
-    getProducts("createdAt").then(data => {
+    getProducts("createdAt").then((data) => {
       if (data.error) {
         setError(data.error);
       } else {
@@ -34,7 +35,7 @@ const Home = () => {
   useEffect(() => {
     loadProductsByArrival();
     loadProductsBySell();
-  }, []);
+  }, [productsBySell, productsByArrival]);
 
   return (
     <Layout

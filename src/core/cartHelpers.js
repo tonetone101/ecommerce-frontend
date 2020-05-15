@@ -1,5 +1,5 @@
 // update quanty of items to localstorage
-export const addItem = (item = [], count = 0, next = f => f) => {
+export const addItem = (item = [], count = 0, next = (f) => f) => {
   let cart = [];
   if (typeof window !== "undefined") {
     if (localStorage.getItem("cart")) {
@@ -7,7 +7,7 @@ export const addItem = (item = [], count = 0, next = f => f) => {
     }
     cart.push({
       ...item,
-      count: 1
+      count: 1,
     });
 
     // remove duplicates
@@ -21,9 +21,9 @@ export const addItem = (item = [], count = 0, next = f => f) => {
 
     // new Set removes the duplicates by mapping thru items
     // then we map again thru the new set of items
-    cart = Array.from(new Set(cart.map(p => p._id))).map(id => {
+    cart = Array.from(new Set(cart.map((p) => p._id))).map((id) => {
       // compares Id of items from new array
-      return cart.find(p => p._id === id);
+      return cart.find((p) => p._id === id);
     });
 
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -66,7 +66,7 @@ export const updateItem = (productId, count) => {
   }
 };
 
-export const removeItem = productId => {
+export const removeItem = (productId) => {
   let cart = [];
   if (typeof window !== "undefined") {
     if (localStorage.getItem("cart")) {
@@ -84,7 +84,7 @@ export const removeItem = productId => {
   return cart;
 };
 
-export const emptyCart = next => {
+export const emptyCart = (next) => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("cart");
     next();

@@ -169,7 +169,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     // console.log(success);
     <div
       className="alert alert-info"
-      style={{ display: success === false ? "" : "none" }}
+      style={{ display: success ? "none" : "" }}
     >
       Thanks! Your payment was successful!
     </div>
