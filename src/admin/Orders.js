@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
-import { listOrders, getStatusValues, updateOrderStatus } from "./apiAdmin";
+import { listOrders, getStatusValues, updateOrderStatus } from "./adminApi";
 import moment from "moment";
 
 const Orders = () => {
@@ -12,7 +12,7 @@ const Orders = () => {
   const { user, token } = isAuthenticated();
 
   const loadOrders = () => {
-    listOrders(user._id, token).then(data => {
+    listOrders(user._id, token).then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
@@ -22,7 +22,7 @@ const Orders = () => {
   };
 
   const loadStatusValues = () => {
-    getStatusValues(user._id, token).then(data => {
+    getStatusValues(user._id, token).then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
@@ -56,7 +56,7 @@ const Orders = () => {
   );
 
   const handleStatusChange = (e, orderId) => {
-    updateOrderStatus(user._id, token, orderId, e.target.value).then(data => {
+    updateOrderStatus(user._id, token, orderId, e.target.value).then((data) => {
       if (data.error) {
         console.log("Status update failed");
       } else {
@@ -65,12 +65,12 @@ const Orders = () => {
     });
   };
 
-  const showStatus = o => (
+  const showStatus = (o) => (
     <div className="form-group">
       <h3 className="mark mb-4">Status: {o.status}</h3>
       <select
         className="form-control"
-        onChange={e => handleStatusChange(e, o._id)}
+        onChange={(e) => handleStatusChange(e, o._id)}
       >
         <option>Update Status</option>
         {statusValues.map((status, index) => (
@@ -93,6 +93,7 @@ const Orders = () => {
           {showOrdersLength()}
 
           {orders.map((o, oIndex) => {
+            console.log(o.user);
             return (
               <div
                 className="mt-5"
@@ -128,7 +129,7 @@ const Orders = () => {
                     key={pIndex}
                     style={{
                       padding: "20px",
-                      border: "1px solid indigo"
+                      border: "1px solid indigo",
                     }}
                   >
                     {showInput("Product name", p.name)}

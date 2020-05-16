@@ -19,6 +19,7 @@ const Shop = () => {
   const [skip, setSkip] = useState(0);
   const [size, setSize] = useState(0);
   const [filteredResults, setFilteredResults] = useState([]);
+  const [runShop, setRunShop] = useState(false);
 
   //load categories and set form data
   const init = () => {
@@ -74,7 +75,7 @@ const Shop = () => {
   useEffect(() => {
     init();
     loadFilterResults(skip, limit, myFilters.filters);
-  }, [categories, filteredResults]);
+  }, [runShop]);
 
   const handleFilters = (filters, filterBy) => {
     //console.log('SHOP',filters, filterBy)
@@ -134,7 +135,12 @@ const Shop = () => {
             {filteredResults.map((product, i) => {
               return (
                 <div key={i} className="col-4 mb-3">
-                  <Card product={product} />;
+                  <Card
+                    product={product}
+                    runShop={runShop}
+                    setRunShop={setRunShop}
+                  />
+                  ;
                 </div>
               );
             })}

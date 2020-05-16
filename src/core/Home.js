@@ -8,7 +8,7 @@ const Home = () => {
   const [productsBySell, setProductsBySell] = useState([]);
   const [productsByArrival, setProductsByArrival] = useState([]);
   const [error, setError] = useState(false);
-  const [items, setItems] = useState([]);
+  const [runHome, setRunhome] = useState(false);
 
   // show products that have been sold
   const loadProductsBySell = () => {
@@ -35,7 +35,7 @@ const Home = () => {
   useEffect(() => {
     loadProductsByArrival();
     loadProductsBySell();
-  }, [productsBySell, productsByArrival]);
+  }, [runHome]);
 
   return (
     <Layout
@@ -48,7 +48,8 @@ const Home = () => {
       <div className="row">
         {productsByArrival.map((product, i) => (
           <div key={i} className="col-4 mb-3">
-            <Card product={product} />;
+            <Card product={product} setRunhome={setRunhome} runHome={runHome} />
+            ;
           </div>
         ))}
       </div>

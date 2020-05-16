@@ -13,6 +13,12 @@ const Card = ({
   showRemoveProductButton = false,
   setRun = (f) => f,
   run = undefined,
+  setRunhome = (f) => f,
+  runHome = undefined,
+  setRunShop = (f) => f,
+  runShop = undefined,
+  setRunProduct = (f) => f,
+  runProduct = undefined,
   // changeCartSize
 }) => {
   const [redirect, setRedirect] = useState(false);
@@ -31,7 +37,12 @@ const Card = ({
   };
 
   const addToCart = () => {
-    addItem(product);
+    addItem(
+      product,
+      setRunProduct(!runProduct),
+      setRunhome(!runHome),
+      setRunShop(!runShop)
+    );
   };
 
   const shouldRedirect = (redirect) => {

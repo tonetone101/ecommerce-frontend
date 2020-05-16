@@ -20,6 +20,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     error: "",
     instance: {},
     address: "",
+    contact: "",
   });
 
   const userId = isAuthenticated() && isAuthenticated().user._id;
@@ -32,17 +33,21 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
         setData({ ...data, error: data.error });
       } else {
         console.log(data);
-        setData({ ...data, clientToken: data.clientToken });
+        setData({ clientToken: data.clientToken });
       }
     });
   };
 
   useEffect(() => {
     getToken(userId, token);
-  }, []);
+  }, [run]);
 
   const handleAddress = (event) => {
     setData({ ...data, address: event.target.value });
+  };
+
+  const handleContact = (event) => {
+    setData({ ...data, contact: event.target.value });
   };
 
   const getTotal = () => {
@@ -62,6 +67,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
   };
 
   let deliveryAddress = data.address;
+  let deliveryContact = data.contact;
 
   const buy = () => {
     setData({ loading: true });
@@ -87,7 +93,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
 
         processPayment(userId, token, paymentData)
           .then((response) => {
-            console.log(response);
+            // console.log(response);
             // empty cart
             // create order
 
@@ -96,6 +102,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
               transaction_id: response.transaction.id,
               amount: response.transaction.amount,
               address: deliveryAddress,
+              contact: deliveryContact,
             };
 
             createOrder(userId, token, createOrderData)
@@ -130,7 +137,17 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     <div onBlur={() => setData({ ...data, error: "" })}>
       {data.clientToken !== null && products.length > 0 ? (
         <div>
-          <div className="gorm-group mb-3">
+          <div className="form-group mb-3">
+            <div className="form-group mb-3">
+              <label className="text-muted">Contact</label>
+              <input
+                onChange={handleContact}
+                className="form-control"
+                value={data.contact}
+                placeholder="Type your email or phone number here..."
+              />
+            </div>
+
             <label className="text-muted">Delivery address:</label>
             <textarea
               onChange={handleAddress}
@@ -170,7 +187,7 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     // console.log(success);
     <div
       className="alert alert-info"
-      style={{ display: success ? "none" : "" }}
+      style={{ display: success ? "" : "none" }}
     >
       Thanks! Your payment was successful!
     </div>
