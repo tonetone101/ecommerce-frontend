@@ -11,6 +11,7 @@ const Orders = () => {
 
   const { user, token } = isAuthenticated();
 
+  // to fetch all orders from backend
   const loadOrders = () => {
     listOrders(user._id, token).then((data) => {
       if (data.error) {
@@ -21,6 +22,7 @@ const Orders = () => {
     });
   };
 
+  // to get the status of order
   const loadStatusValues = () => {
     getStatusValues(user._id, token).then((data) => {
       if (data.error) {
@@ -36,6 +38,7 @@ const Orders = () => {
     loadStatusValues();
   }, []);
 
+  // show length of orders in total else itll say no orders
   const showOrdersLength = () => {
     if (orders.length > 0) {
       return (
@@ -55,16 +58,19 @@ const Orders = () => {
     </div>
   );
 
+  // to change status of order
   const handleStatusChange = (e, orderId) => {
     updateOrderStatus(user._id, token, orderId, e.target.value).then((data) => {
       if (data.error) {
         console.log("Status update failed");
       } else {
+        // will reload the orders upon changing the status
         loadOrders();
       }
     });
   };
 
+  // to show the status
   const showStatus = (o) => (
     <div className="form-group">
       <h3 className="mark mb-4">Status: {o.status}</h3>
@@ -92,6 +98,7 @@ const Orders = () => {
         <div className="col-md-8 offset-md-2">
           {showOrdersLength()}
 
+          {/*maps thru the orders */}
           {orders.map((o, oIndex) => {
             console.log(o.user);
             return (
@@ -110,6 +117,7 @@ const Orders = () => {
                     Transaction ID: {o.transaction_id}
                   </li>
                   <li className="list-group-item">Amount: ${o.amount}</li>
+                  {/* information of buyer */}
                   <li className="list-group-item">Ordered by: {o.user.name}</li>
                   <li className="list-group-item">
                     Ordered on: {moment(o.createdAt).fromNow()}
@@ -117,8 +125,9 @@ const Orders = () => {
                   <li className="list-group-item">
                     Delivery address: {o.address}
                   </li>
+                  <li className="list-group-item">Contact: {o.contact}</li>
                 </ul>
-
+                {/* information of user's ordered items */}
                 <h3 className="mt-4 mb-4 font-italic">
                   Total products in the order: {o.products.length}
                 </h3>

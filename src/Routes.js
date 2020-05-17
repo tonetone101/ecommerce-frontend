@@ -33,7 +33,7 @@ const Routes = () => {
         <Route path="/product/:productId" exact component={Product} />
         <Route path="/cart" exact component={Cart} />
         <AdminRoute path="/admin/orders" exact component={Orders} />
-        <PrivateRoute path="/profile/:userId" exact component={Profile} />
+        <Route path="/profile/:userId" exact component={Profile} />
         {/*<PrivateRoute path="/admin/products" exact component={ManageProducts} />*/}
         {/*<AdminRoute
           path="/admin/product/update/:productId"
