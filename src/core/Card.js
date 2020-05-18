@@ -66,9 +66,11 @@ const Card = ({
     );
   };
 
-  const showStock = (quantity) => {
-    return quantity > 0 ? (
-      <span className="badge badge-primary badge-pill">In Stock </span>
+  const showStock = (quanity) => {
+    return quanity > 0 ? (
+      <span className="badge badge-primary badge-pill">
+        {quanity} In Stock{" "}
+      </span>
     ) : (
       <span className="badge badge-primary badge-pill">Out of Stock </span>
     );
@@ -88,7 +90,7 @@ const Card = ({
         <div>
           <div className="input-group mb-3">
             <div className="input-group-prepend">
-              <span className="input-group-text">Adjust Quantity</span>
+              <span className="input-group-text">Adjust Quanity</span>
             </div>
             <input
               type="number"
@@ -131,7 +133,7 @@ const Card = ({
         <p className="black-8">
           Added on {moment(product.createdAt).fromNow()}
         </p>
-        {showStock(product.quantity)}
+        {showStock(product.quanity)}
         <br />
 
         {showViewButton(showViewProductButton)}
